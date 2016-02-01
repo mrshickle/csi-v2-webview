@@ -19,7 +19,7 @@ public class Dashboard extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
         WebView engine = (WebView) findViewById(R.id.webView);
 
@@ -29,11 +29,12 @@ public class Dashboard extends Activity {
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         engine.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress)
-            {
+            public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress);
             }
         });
+
+
 
         engine.setWebViewClient(new FixedWebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon)
@@ -47,8 +48,9 @@ public class Dashboard extends Activity {
             }
         });
         engine.getSettings().setJavaScriptEnabled(true);
+        engine.getSettings().setUserAgentString("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36");
         engine.clearCache(true);
-        engine.loadUrl("http://qa-dot-csi-v2.appspot.com/");
+        engine.loadUrl("https://haik-dot-csi-v2.appspot.com/");
     }
 
     public void onBackPressed() {
@@ -70,6 +72,7 @@ public class Dashboard extends Activity {
             view.loadUrl(url);
             return true;
         }
-    }
+
+  }
 
 }
